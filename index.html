@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>A Little Surprise ❤️</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffd6e7, #fff0f5);
+            font-family: Arial, sans-serif;
+            overflow-x: hidden;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            background: white;
+            padding: 35px 20px;
+            border-radius: 30px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 35px rgba(220, 100, 150, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            color: #e75480;
+            font-size: 30px;
+        }
+
+        h2 {
+            color: #b83265;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 13px 35px;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        #yesBtn {
+            background: #e75480;
+            color: white;
+        }
+
+        #noBtn {
+            background: #888;
+            color: white;
+        }
+
+        #result {
+            display: none;
+            margin-top: 25px;
+        }
+
+        img, video {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 20px;
+            margin-top: 15px;
+        }
+
+        #loveMessage {
+            color: #d63384;
+            font-size: 19px;
+            line-height: 1.7;
+            opacity: 0;
+            transition: opacity 2s;
+        }
+
+        #loveMessage.show {
+            opacity: 1;
+        }
+
+        .heart {
+            position: fixed;
+            bottom: -30px;
+            font-size: 25px;
+            animation: float 6s linear infinite;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Hey You! ❤️</h1>
+
+        <h2>Do you love me? 🥺</h2>
+
+        <div class="buttons">
+
+            <button id="yesBtn" onclick="showYes()">
+                YES ❤️
+            </button>
+
+            <button id="noBtn" onclick="showNo()">
+                NO 💔
+            </button>
+
+        </div>
+
+        <div id="result">
+
+            <h2 id="message"></h2>
+
+            <div id="media"></div>
+
+            <p id="loveMessage"></p>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // Moving NO button
+
+        let moveCount = 0;
+
+        const noButton = document.getElementById("noBtn");
+
+        noButton.addEventListener("pointerenter", function() {
+
+            if (moveCount < 2) {
+
+                let x = Math.random() * 100 - 50;
+                let y = Math.random() * 60 - 30;
+
+                noButton.style.transform =
+                    `translate(${x}px, ${y}px)`;
+
+                moveCount++;
+
+            }
+
+        });
+
+
+        // YES button
+
+        function showYes() {
+
+            const result = document.getElementById("result");
+
+            result.style.display = "block";
+
+            document.getElementById("message").innerText =
+                "I KNEW IT!! 🥹❤️";
+
+            document.getElementById("media").innerHTML = `
+
+                <video id="happyVideo" controls autoplay playsinline>
+
+                    <source src="happy-cat.mp4.mp4" type="video/mp4">
+
+                    Your browser does not support video.
+
+                </video>
+
+            `;
+
+            const loveMessage =
+                document.getElementById("loveMessage");
+
+            loveMessage.classList.remove("show");
+
+            loveMessage.innerText = "";
+
+            const video = document.getElementById("happyVideo");
+
+            video.onended = function() {
+
+                loveMessage.innerText =
+                    "You are my favorite person, " +
+                    "my sweetest thought, and my happiest place. " +
+                    "Every little moment with you means the world to me. " +
+                    "I'm so lucky to have you. I love you ya abody ! ❤️";
+                loveMessage.classList.add("show");
+
+            };
+
+        }
+
+
+        // NO button
+
+        function showNo() {
+
+            const result = document.getElementById("result");
+
+            result.style.display = "block";
+
+            document.getElementById("message").innerText =
+                "Wait... REALLY?! 😭💔";
+
+            document.getElementById("media").innerHTML = `
+
+                <img src="sad-cat.jpg.jpg" alt="Sad Cat">
+
+            `;
+
+            document.getElementById("loveMessage").innerText =
+                "Look what you've done! " +
+                "Even this little cat is heartbroken! 🥺";
+
+            document.getElementById("loveMessage")
+                .classList.add("show");
+
+        }
+
+
+        // Floating hearts
+
+        function createHeart() {
+
+            const heart = document.createElement("div");
+
+            heart.className = "heart";
+
+            heart.innerHTML = "❤️";
+
+            heart.style.left = Math.random() * 100 + "vw";
+
+            heart.style.animationDuration =
+                (Math.random() * 3 + 4) + "s";
+
+            document.body.appendChild(heart);
+
+            setTimeout(function() {
+
+                heart.remove();
+
+            }, 7000);
+
+        }
+
+        setInterval(createHeart, 500);
+
+    </script>
+
+</body>
+
+</html>
